@@ -1,0 +1,122 @@
+:root{
+    --round-border: 5px;
+}
+
+body{
+    background-color: lightyellow;
+}
+
+.dashboard_container{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.dashboard_container > h1{
+    text-align: center;
+}
+
+/*Calendar Styles */
+.calendar_title_text{
+    margin: 0 12px 0 0;
+}
+.calendar_title{
+    display: flex;
+}
+.calendar_container{
+    width:95vw;
+    height: 80vh;
+    background-image: linear-gradient(to right, rgb(109,216,251), rgb(186, 243, 239)) ;
+    border-radius: var(--round-border);
+    padding:16px;
+    display: flex;
+    flex-direction: column;
+
+}
+.calendar_days_container{
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+.calendar_day{
+    width: calc((100% - 100px)/ 7);
+    min-height: calc((100% / 5)- 4px);
+    margin-top: 4px;
+    margin-right: 4px;
+    background-color: rgb(255, 255, 255,.5) ;
+    border:1px solid grey;
+    border-radius: var(--round-border);
+    padding: 4px;
+}
+.calendar_day:hover{
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+.day{
+    margin:0;
+}
+
+/*Modal Styles*/
+.basic_modal_styles {
+    display:none;
+    width:100vw;
+    height:100vh;
+    z-index: 100;
+    background-color: rgb(0,0,0,.5);
+    position: fixed;
+    top:0;
+    left:0;
+}
+.basic_modal_paper{
+    width: 60%;
+    height:80%;
+    border-radius: var(--round-border);
+    padding:8px;
+    display: inherit;
+    background-color: antiquewhite;
+    flex-direction: column;
+    margin: auto;
+}
+.basic_modal_close_btn{
+    width: 100%;
+    display: contents;
+}
+#modal_close_btn{
+    font-weight: bold;
+    text-align: right;
+    cursor: pointer;
+}
+
+/*arrow css*/
+.arrow_container{
+    width:50px;
+}
+.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.right {
+    margin-left:20px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+.arrow:hover{
+    cursor: pointer;
+    border-color: whitesmoke;
+}
+
+/*year css*/
+.calendar_year_container{
+    margin-left: auto;
+}
+.calendar_year_text{
+    margin:0;
+}
