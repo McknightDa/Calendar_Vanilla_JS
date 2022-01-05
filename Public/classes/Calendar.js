@@ -1,5 +1,5 @@
-import { getMonth, getMonthDays} from '../util_modules/date_utils.js';
-import { createDay, createCalendarContainerMarkup } from "../markup_modules/Calendar_Markup.js";
+import { getMonth, getMonthDays } from '../util_modules/date_utils.js';
+import { createDay, createCalendarContainerMarkup, createTaskList } from "../markup_modules/Calendar_Markup.js";
 
 export default class Calendar{
     constructor(data){
@@ -51,7 +51,7 @@ export default class Calendar{
             createCalendarContainerMarkup();
             const leftArrow = document.querySelector('.arrow.left');
             const rightArrow = document.querySelector('.arrow.right');
-            leftArrow.addEventListener('click', this.boundMoveLeft)
+            leftArrow.addEventListener('click', this.boundMoveLeft);
             rightArrow.addEventListener('click', this.boundMoveRight)
         }
 
@@ -67,12 +67,23 @@ export default class Calendar{
         //adding calendar days
         const numberOfCurrentMonthDays = getMonthDays(this.currentSelectedMonthNum, this.year);
         const calendarDaysContainer = document.querySelector('.calendar_days_container');
+        //finding all tasks for the month
+        const dataToUse = this.data[`${this.currentMonthLbl.toLowerCase()}_${this.year}`] || [];
         for(let i =0 ; i < numberOfCurrentMonthDays; i++){
-            const dayEl = createDay(i+1, currentMonthTitle);
-            dayEl.addEventListener('click', () => {
+            const dayEl = createDay(i+1, currentMonthTitle, numberOfCurrentMonthDays < 29);
+            //find day
+            const dayTasks = dataToUse.find(d => d.day === i+1);
+            //create task list to be inserted in calendar day
+            if(dayTasks){
+                const tasks = createTaskList(dayTasks.tasks, `${currentMonthTitle}_${i+1}`);
+                dayEl.appendChild(tasks);
+            }
+
+            dayEl.addEventListener('click', (e) => {
+                e.stopPropagation();
                 const event = new CustomEvent('selected-day', {
                 bubbles: true,
-                detail:{ id: `${currentMonthTitle}_${i+1}`}
+                detail:{ id: `${currentMonthTitle}_${i+1}`, dataForModal: dayTasks}
             });
                 dayEl.dispatchEvent(event)});
             calendarDaysContainer.appendChild(dayEl)

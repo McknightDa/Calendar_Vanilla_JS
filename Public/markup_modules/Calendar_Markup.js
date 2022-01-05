@@ -1,6 +1,6 @@
-const createDayContainerMarkup = id => {
+const createDayContainerMarkup = (id, shouldAddFebOverride) => {
     const el = document.createElement('div');
-    el.className = 'calendar_day';
+    el.className = `calendar_day${ shouldAddFebOverride ?  ' february_override':''}`;
     el.id = id;
     return el
 };
@@ -12,10 +12,31 @@ const createDayLabelMarkUp = (day, dayNode) => {
     dayNode.appendChild(dayLb)
 };
 
-const createDay = (day, month) => {
-    const dayC = createDayContainerMarkup(`${month}_${day}`);
+const createDay = (day, month, shouldAddFebOverride) => {
+    const dayC = createDayContainerMarkup(`${month}_${day}`, shouldAddFebOverride);
     createDayLabelMarkUp(day, dayC);
     return dayC
+};
+
+const createTaskList =  (taskArray, dayId) => {
+    const list_container = document.createElement('ul');
+    list_container.className = 'tasks_list_container';
+    list_container.id = `task_list_${dayId}`;
+    const userTaskCount = taskArray.reduce((acc, curr) => {
+        if(acc[curr.assignedTo]){
+            acc[curr.assignedTo].push(curr);
+            return acc;
+        }
+        acc[curr.assignedTo] = [curr];
+        return acc
+    }, {});
+    Object.keys(userTaskCount).forEach(user => {
+        const el = document.createElement('li');
+        el.className = 'task_item';
+        el.innerText = `${user} - ${userTaskCount[user].length} tasks`;
+        list_container.appendChild(el)
+    });
+    return list_container;
 };
 
 const createCalendarContainerMarkup = () => {
@@ -51,5 +72,6 @@ const createCalendarContainerMarkup = () => {
 
 export {
     createDay,
-    createCalendarContainerMarkup
+    createCalendarContainerMarkup,
+    createTaskList
 }

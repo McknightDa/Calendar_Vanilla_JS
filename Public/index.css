@@ -1,5 +1,6 @@
 :root{
     --round-border: 5px;
+    --width-transition-setting: width .5s ease
 }
 
 body{
@@ -30,6 +31,7 @@ body{
     padding:16px;
     display: flex;
     flex-direction: column;
+    box-shadow: 12px 6px 12px 1px rgba(0, 0, 0, .4);
 
 }
 .calendar_days_container{
@@ -40,13 +42,17 @@ body{
 }
 .calendar_day{
     width: calc((100% - 100px)/ 7);
-    min-height: calc((100% / 5)- 4px);
+    height: calc((100% / 5) - 14px);
+    overflow-y: auto;
     margin-top: 4px;
     margin-right: 4px;
     background-color: rgb(255, 255, 255,.5) ;
     border:1px solid grey;
     border-radius: var(--round-border);
     padding: 4px;
+}
+.february_override{
+    height: calc((100% / 4) - 14px);
 }
 .calendar_day:hover{
     background-color: rgb(255, 255, 255);
@@ -86,6 +92,9 @@ body{
     text-align: right;
     cursor: pointer;
 }
+.basic_modal_content{
+    flex-grow:1;
+}
 
 /*arrow css*/
 .arrow_container{
@@ -119,4 +128,103 @@ body{
 }
 .calendar_year_text{
     margin:0;
+}
+
+/*tasks list*/
+.tasks_list_container{
+    list-style-type: none;
+    padding:0;
+    margin:0;
+}
+.task_item{
+    border-bottom: 1px solid grey;
+}
+
+/*hour breakdown*/
+.day_time_breakdown_container{
+    height:100%;
+    overflow:auto;
+    border: 1px solid lightgrey;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    transition: var(--width-transition-setting);
+}
+.day_time_breakdown_container::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+}
+.day_hour_container{
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-auto-rows: 50% 50%;
+    height: calc(100% / 6);
+    border-bottom: 1px solid lightgrey;
+}
+.day_hour_container > div:nth-child(1),
+.day_hour_container > div:nth-child(3) {
+    border-right: 1px solid lightgrey;;
+}
+.hour_cell > p {
+    margin:0;
+}
+.day_hour_container > div:nth-child(1),
+.day_hour_container > div:nth-child(2){
+    border-bottom: 1px solid lightgrey;;
+}
+.hour_cell{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/*If you change background grid dimension you have to update this container and calculate based on whole view port*/
+.summary_content_outer_shell{
+    height: calc(90% - 16px);
+    width:80%;
+    position: fixed;
+    z-index: 10;
+    overflow: auto;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-areas: "leave-blank data"
+}
+.summary_content_inner_shell{
+    width:100%;
+    height: calc((100% / 6) * 24);
+    grid-area: data;
+    display: grid;
+    grid-template-rows: repeat(96, calc(100% / 96));
+    grid-auto-columns: 1fr;
+}
+.summary_day_task{
+    border-radius: var(--round-border);
+    box-shadow: 6px 6px 12px 1px rgba(0, 0, 0, .2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.basic_modal_content_and_details_container{
+    display: flex;
+    flex-grow: 1;
+}
+.basic_modal_details{
+    height:calc(100% - 16px);
+    /*background-color: rgba(0,0,0,.5);*/
+    width:0px;
+    transition: var(--width-transition-setting);
+    display: flex;flex-direction: column;
+    padding:8px;
+}
+.summary_content_outer_shell{
+    transition: var(--width-transition-setting);
+}
+.details_times_container{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+.delay_visibility{
+    opacity: 0;
+    transition: opacity .25s ease-in-out;
+}
+.show_visibility{
+    opacity: 1;
 }
