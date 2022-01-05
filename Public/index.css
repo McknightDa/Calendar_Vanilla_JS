@@ -200,6 +200,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 .basic_modal_content_and_details_container{
     display: flex;
