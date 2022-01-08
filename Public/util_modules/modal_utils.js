@@ -1,5 +1,8 @@
-const closeDialog = (dialogContainerNode, body) => {
-    dialogContainerNode.style.display = 'none';
+export const closeDialog = () => {
+    const body = document.querySelector('body');
+    const dialogContainer = document.querySelector('.basic_modal_styles');
+
+    dialogContainer.style.display = 'none';
     body.style.overflowY = 'auto';
     document.querySelector('.basic_modal_styles').innerHTML = null;
 };

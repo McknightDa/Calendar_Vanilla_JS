@@ -1,3 +1,5 @@
+/*old way of doing it */
+
 const createDayContainerMarkup = (id, shouldAddFebOverride) => {
     const el = document.createElement('div');
     el.className = `calendar_day${ shouldAddFebOverride ?  ' february_override':''}`;
@@ -60,12 +62,26 @@ const createCalendarContainerMarkup = () => {
     const yearContainer = document.createElement('div');
     yearContainer.className ='calendar_year_container';
     const yearText = document.createElement('h3');
+
+    const plusBtnCnt = document.createElement('div');
+    const plusBtn = document.createElement('i');
+    plusBtnCnt.classList.add('plus_btn');
+    plusBtn.classList.add('plus_txt');
+    plusBtnCnt.appendChild(plusBtn);
+    plusBtn.innerText = '+';
+    const event = new Event('add_new_task', {bubbles:true});
+    plusBtnCnt.addEventListener('click', (e) => {
+        e.stopPropagation();
+        plusBtnCnt.dispatchEvent(event)
+    });
+
     yearText.className='calendar_year_text';
     yearContainer.appendChild(yearText);
     arrowContainer.appendChild(leftArrow);
     arrowContainer.appendChild(rightArrow);
     titleContainer.appendChild(titleEl);
     titleContainer.appendChild(arrowContainer);
+    titleContainer.appendChild(plusBtnCnt);
     titleContainer.appendChild(yearContainer);
     targetLocation.appendChild(outerContainer)
 };

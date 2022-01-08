@@ -229,3 +229,53 @@ body{
 .show_visibility{
     opacity: 1;
 }
+
+/*plus btn*/
+.plus_btn{
+    width:25px;
+    height:25px;
+    border-radius: 50%;
+    background-color:darkblue;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color:white;
+    font-size:20px;
+    transition: box-shadow .5s ease-in-out;
+}
+.plus_txt{
+    font-weight:bold;
+    cursor: pointer;
+}
+.plus_btn:hover{
+    transition: all .5s ease-in-out;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, .4);
+}
+.plus_btn:active{
+    transition: all ease-in-out;
+    transform: scale(.98);
+    background-color: white;
+    color:darkblue;
+}
+
+/*add task form*/
+.add_task_form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.add_task_btn_container,
+.add_task_time_container,
+.add_task_field_container{
+    width:100%;
+    display: flex;
+    margin-bottom: 1rem;
+    justify-content: space-evenly;
+}
+#task_description{
+    flex-grow: 1;
+}
+.add_task_btn_container > button{
+    width:25%;
+}

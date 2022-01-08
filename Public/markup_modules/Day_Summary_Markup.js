@@ -1,4 +1,5 @@
 import { convertTimeToAmPm } from '../util_modules/date_utils.js'
+/*old way of doing it */
 
 const createBackgroundGrid = (container) => {
     for(let i=0; i < 24; i++){

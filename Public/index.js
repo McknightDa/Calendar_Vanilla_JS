@@ -1,4 +1,4 @@
-import { AppState, Calendar, DaySummary } from './classes/index.js'
+import { AppState, Calendar, DaySummary, AddTask } from './classes/index.js'
 
 const clickDay = (detail, context) => {
     if(!detail.dataForModal) return;
@@ -10,8 +10,15 @@ const clickDay = (detail, context) => {
     modal.render()
 };
 
+const clickAddTask = (context) => {
+    context.setState({addingTask: true});
+    const modal = new AddTask(context);
+    modal.render()
+};
+
 const customEventsRegistry = (context) => {
-    document.addEventListener('selected-day', e => clickDay(e.detail, context))
+    document.addEventListener('selected-day', e => clickDay(e.detail, context));
+    document.addEventListener('add_new_task', ()=> clickAddTask(context))
 
 };
 
@@ -168,16 +175,23 @@ function main(){
     const appState = new AppState.State({
         openDay: null,
         today:new Date(),
+        addingTask: false,
         currentlySelectedMonth: new Date().getMonth() +1,
         calendarData: data,
         dataForModal: null,
+        renderedCalendar: null,
+        currentUser: users[0]
     });
 
     customEventsRegistry(appState);
 
     /**********Calendar ********/
     const calendar = new Calendar(appState.getState('calendarData'));
+
     calendar.render();
+    appState.setState({
+        renderedCalendar: calendar
+    });
     /********* End of Calendar******/
 }
 
