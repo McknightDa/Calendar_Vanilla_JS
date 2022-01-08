@@ -56,6 +56,7 @@ export default class AddTask{
         closeDialog()
     }
     boundAdd = this.addTask.bind(this);
+    /* validation to stop user from having end time that is earlier than start time */
     updateOptions(){
         const startNodes =  this.startDropDown.querySelectorAll('option');
         startNodes.forEach(node => {
